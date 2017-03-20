@@ -10,6 +10,7 @@ import java.util.Currency;
 /**
  * Created by mickaelvillers on 20/03/2017.
  */
+@Entity
 public class Account {
     @Id
     @GeneratedValue
@@ -19,29 +20,23 @@ public class Account {
     @NotEmpty
     private String name;
 
-    @Column(name = "account_number")
-    private String accountNumber;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     @NotNull
-    private Currency currency;
+    private String accountNumber;
 
     @Column(nullable = false)
     @NotNull
     private BigDecimal balance;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false, targetEntity = User.class)
     @JoinColumn(nullable = false)
     private User user;
 
     public Account() {
     }
 
-    public Account(String name, String accountNumber, Currency currency, BigDecimal balance, User user) {
+    public Account(String name, String accountNumber, BigDecimal balance, User user) {
         this.name = name;
         this.accountNumber = accountNumber;
-        this.currency = currency;
         this.balance = balance;
         this.user = user;
     }
@@ -68,14 +63,6 @@ public class Account {
 
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
     }
 
     public BigDecimal getBalance() {
