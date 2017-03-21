@@ -1,46 +1,73 @@
 package com.instic.controller;
 
 import com.instic.entity.User;
-import com.instic.repository.UserRepository;
+import com.instic.forms.LoginForm;
+import com.instic.services.LoginService;
+import com.instic.services.SecurityService;
+import com.instic.services.UserService;
+import com.instic.validator.UserValidator;
+import org.hibernate.pretty.MessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
+import javax.validation.Valid;
 
 /**
  * Created by mickaelvillers on 20/03/2017.
  */
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
-    private UserRepository userRepository;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private UserService userService;
+
+    @Autowired
+    private SecurityService securityService;
+
+    @Autowired
+    private UserValidator userValidator;
+
+    @GetMapping("/registration")
+    public String registration(Model model) {
+        model.addAttribute("userForm", new User());
+
+        return "registration";
     }
 
-    @GetMapping
-    public String findAllUsers(Model model) {
-        model.addAttribute("users", this.userRepository.findAll());
+    @PostMapping("/registration")
+    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+        userValidator.validate(userForm, bindingResult);
 
-        return "user/index";
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+
+        userService.save(userForm);
+
+        securityService.autologin(userForm.getLogin(), userForm.getPassword());
+
+        return "redirect:/welcome";
     }
 
-    @GetMapping("/{email}")
-    public String findOneUser(
-            @PathVariable(value="email") String email,
-            Model model
-    ) {
-        model.addAttribute("user", this.userRepository.findByEmail(email));
-        return "user/one";
+    @GetMapping("/login")
+    public String login(Model model, String error, String logout) {
+        if (error != null)
+            model.addAttribute("error", "Your username and password is invalid.");
+
+        if (logout != null)
+            model.addAttribute("message", "You have been logged out successfully.");
+
+        return "login";
     }
 
-
-    /*@RequestMapping(method = RequestMethod.POST)
-    public void addUser(@RequestBody AddUserRequest addUserRequest) {
-        return this.userRepository.findAll();
-    }*/
+    @GetMapping(value = {"/", "/welcome"})
+    public String welcome(Model model) {
+        return "welcome";
+    }
 }
