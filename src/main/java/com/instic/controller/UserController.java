@@ -1,21 +1,19 @@
 package com.instic.controller;
 
 import com.instic.entity.User;
-import com.instic.forms.LoginForm;
-import com.instic.services.LoginService;
 import com.instic.services.SecurityService;
 import com.instic.services.UserService;
 import com.instic.validator.UserValidator;
-import org.hibernate.pretty.MessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
+import java.security.Principal;
 
 /**
  * Created by mickaelvillers on 20/03/2017.
@@ -33,19 +31,24 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
-    @GetMapping("/registration")
+    @ModelAttribute("page")
+    public String module() {
+        return "user";
+    }
+
+    @GetMapping("/signup")
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
 
-        return "registration";
+        return "signup/signup";
     }
 
-    @PostMapping("/registration")
+    @PostMapping("/signup")
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return "signup/signup";
         }
 
         userService.save(userForm);
@@ -55,7 +58,7 @@ public class UserController {
         return "redirect:/welcome";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/signin")
     public String login(Model model, String error, String logout) {
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
@@ -63,11 +66,6 @@ public class UserController {
         if (logout != null)
             model.addAttribute("message", "You have been logged out successfully.");
 
-        return "login";
-    }
-
-    @GetMapping(value = {"/", "/welcome"})
-    public String welcome(Model model) {
-        return "welcome";
+        return "signin/signin";
     }
 }
