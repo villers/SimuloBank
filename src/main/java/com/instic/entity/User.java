@@ -26,14 +26,6 @@ public class User {
 
     @Column(nullable = false)
     @NotEmpty
-    private String firstName;
-
-    @Column(nullable = false)
-    @NotEmpty
-    private String lastName;
-
-    @Column(nullable = false)
-    @NotEmpty
     @Email
     private String email;
 
@@ -46,11 +38,9 @@ public class User {
     public User() {
     }
 
-    public User(String login, String password, String firstName, String lastName, String email, Date registered, List<Account> accounts) {
+    public User(String login, String password, String email, Date registered, List<Account> accounts) {
         this.login = login;
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.email = email;
         this.registered = registered;
         this.accounts = accounts;
@@ -78,22 +68,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getEmail() {

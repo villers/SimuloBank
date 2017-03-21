@@ -1,5 +1,6 @@
 package com.instic.controller;
 
+import com.instic.entity.Account;
 import com.instic.entity.User;
 import com.instic.services.SecurityService;
 import com.instic.services.UserService;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mickaelvillers on 20/03/2017.
@@ -51,6 +54,7 @@ public class UserController {
             return "signup/signup";
         }
 
+        userForm.setAccounts(new ArrayList<>());
         userService.save(userForm);
 
         securityService.autologin(userForm.getLogin(), userForm.getPassword());
@@ -61,7 +65,7 @@ public class UserController {
     @GetMapping("/signin")
     public String login(Model model, String error, String logout) {
         if (error != null)
-            model.addAttribute("error", "Your username and password is invalid.");
+            model.addAttribute("error", "Your login and password is invalid.");
 
         if (logout != null)
             model.addAttribute("message", "You have been logged out successfully.");

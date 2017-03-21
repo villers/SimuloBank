@@ -12,9 +12,9 @@
 
 <body>
 
-<form class="form-narrow form-horizontal" method="post" th:action="@{/signup}" th:object="${signupForm}" th:fragment="signupForm">
+<form class="form-narrow form-horizontal" method="post" th:action="@{/users/signup}" th:object="${userForm}" th:fragment="signupForm">
     <!--/* Show general error task when form contains errors */-->
-    <th:block th:if="${#fields.hasErrors('${signupForm.*}')}">
+    <th:block th:if="${#fields.hasErrors('${userForm.*}')}">
         <div th:replace="fragments/alert :: alert (type='danger', message='Form contains errors. Please try again.')">Alert</div>
     </th:block>
     <fieldset>
@@ -24,6 +24,13 @@
             <div class="col-lg-10">
                 <input type="text" class="form-control" id="email" placeholder="Email address" th:field="*{email}" />
                 <span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect email</span>
+            </div>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('login')}? 'has-error'">
+            <label for="login" class="col-lg-2 control-label">Login</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="login" placeholder="Login" th:field="*{login}" />
+                <span class="help-block" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Incorrect login</span>
             </div>
         </div>
         <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
