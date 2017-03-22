@@ -31,7 +31,6 @@ public class User {
 
     private Date registered = new Date();
 
-
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "user")
     private List<Account> accounts;
 

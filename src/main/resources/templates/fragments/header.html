@@ -21,14 +21,14 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li th:classappend="${page == 'home' ? 'active' : ''}"><a href="#" th:href="@{/}">Home</a></li>
+                <li th:classappend="${page == 'home' ? 'active' : ''}"><a th:href="@{/}">Home</a></li>
+                <li sec:authorize="isAuthenticated()" th:classappend="${page == 'account' ? 'active' : ''}"><a th:href="@{/account/}">Account</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li sec:authorize="!isAuthenticated()"><a href="/users/signin" th:href="@{/signin}">Sign in</a></li>
-                <li sec:authorize="isAuthenticated()"><a href="/users/logout" th:href="@{/logout}">Logout</a></li>
+                <li sec:authorize="!isAuthenticated()"><a th:href="@{/users/signin}">Sign in</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
             </ul>
         </div>
-        <!--/.nav-collapse -->
     </div>
 </div>
 </body>

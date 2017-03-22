@@ -1,6 +1,5 @@
 package com.instic.controller;
 
-import com.instic.entity.Account;
 import com.instic.entity.User;
 import com.instic.services.SecurityService;
 import com.instic.services.UserService;
@@ -14,9 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.security.Principal;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by mickaelvillers on 20/03/2017.

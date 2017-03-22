@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by mickaelvillers on 20/03/2017.
@@ -29,6 +30,9 @@ public class Account {
     @ManyToOne(fetch = FetchType.EAGER, optional = false, targetEntity = User.class)
     @JoinColumn(nullable = false)
     private User user;
+
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "account")
+    private List<AccountHistory> accountHistory;
 
     public Account() {
     }
@@ -78,5 +82,13 @@ public class Account {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<AccountHistory> getAccountHistory() {
+        return accountHistory;
+    }
+
+    public void setAccountHistory(List<AccountHistory> accountHistory) {
+        this.accountHistory = accountHistory;
     }
 }
