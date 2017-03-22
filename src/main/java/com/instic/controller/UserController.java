@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 
 /**
@@ -28,7 +29,7 @@ public class UserController {
     @Autowired
     private SecurityService securityService;
 
-    @Autowired
+    @Resource
     private UserValidator userValidator;
 
     @ModelAttribute("page")
