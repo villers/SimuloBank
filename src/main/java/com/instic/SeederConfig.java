@@ -24,7 +24,7 @@ public class SeederConfig {
     public boolean seed() {
         if (accountTypeService.findAll().isEmpty()) {
             accountTypeService.save(new AccountType("Pel"));
-            accountTypeService.save(new AccountType("Livre A"));
+            accountTypeService.save(new AccountType("Livret A"));
             accountTypeService.save(new AccountType("Compte Courrant"));
             accountTypeService.save(new AccountType("Compte Epargne"));
         }
