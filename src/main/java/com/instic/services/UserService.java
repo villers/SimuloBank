@@ -6,8 +6,7 @@ import com.instic.entity.User;
  * Created by mickaelvillers on 21/03/2017.
  */
 public interface UserService {
-    void save(User user);
-
     User findByLogin(String login);
     User findByEmail(String email);
+    void save(User user);
 }

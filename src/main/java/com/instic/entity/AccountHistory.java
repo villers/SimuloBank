@@ -1,6 +1,7 @@
 package com.instic.entity;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,14 +26,13 @@ public class AccountHistory {
     @NotNull
     private BigDecimal transaction;
 
-    @Column(nullable = false)
-    @NotNull
-    private TransactionType transaction_type;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false, targetEntity = TransactionType.class)
+    private TransactionType type;
 
+    @DateTimeFormat(pattern="dd MMM yyyy HH:mm")
     private Date date = new Date();
 
     public AccountHistory(){
-
     }
 
     public long getId() {
@@ -67,12 +67,12 @@ public class AccountHistory {
         this.transaction = transaction;
     }
 
-    public TransactionType getTransaction_type() {
-        return transaction_type;
+    public TransactionType getType() {
+        return type;
     }
 
-    public void setTransaction_type(TransactionType transaction_type) {
-        this.transaction_type = transaction_type;
+    public void setType(TransactionType type) {
+        this.type = type;
     }
 
     public Date getDate() {

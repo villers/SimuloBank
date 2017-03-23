@@ -1,17 +1,17 @@
 package com.instic.entity;
 
-/**
- * Created by mickaelvillers on 22/03/2017.
- */
-
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by mickaelvillers on 22/03/2017.
+ */
 @Entity
-public class TransactionType {
+public class AccountType {
+
     @Id
     @GeneratedValue
     private long id;
@@ -21,14 +21,14 @@ public class TransactionType {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "type")
-    private List<AccountHistory> accountHistories;
+    private List<Account> account;
 
-    public TransactionType() {
+    public AccountType() {
     }
 
-    public TransactionType(String name) {
+    public AccountType(String name) {
         this.name = name;
-        this.accountHistories = new ArrayList<>();
+        this.account = new ArrayList<>();
     }
 
     public long getId() {
@@ -47,11 +47,11 @@ public class TransactionType {
         this.name = name;
     }
 
-    public List<AccountHistory> getAccountHistories() {
-        return accountHistories;
+    public List<Account> getAccount() {
+        return account;
     }
 
-    public void setAccountHistories(List<AccountHistory> accountHistories) {
-        this.accountHistories = accountHistories;
+    public void setAccount(List<Account> account) {
+        this.account = account;
     }
 }

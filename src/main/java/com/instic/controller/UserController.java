@@ -3,7 +3,6 @@ package com.instic.controller;
 import com.instic.entity.User;
 import com.instic.services.SecurityService;
 import com.instic.services.UserService;
-import com.instic.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.ArrayList;
 
 /**
@@ -29,9 +28,6 @@ public class UserController {
     @Autowired
     private SecurityService securityService;
 
-    @Resource
-    private UserValidator userValidator;
-
     @ModelAttribute("page")
     public String module() {
         return "user";
@@ -45,9 +41,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-        userValidator.validate(userForm, bindingResult);
-
+    public String registration(@Valid @ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "signup/signup";
         }
