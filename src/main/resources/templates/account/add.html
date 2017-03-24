@@ -22,7 +22,7 @@
         <div class="form-group" th:classappend="${#fields.hasErrors('balance')}? 'has-error'">
             <label for="balance" class="col-lg-2 control-label">Balance</label>
             <div class="col-lg-10">
-                <input type="text" class="form-control" id="balance" placeholder="Balance" th:field="*{balance}" />
+                <input type="number" step="0.01" class="form-control" id="balance" placeholder="Balance" th:field="*{balance}" />
             </div>
         </div>
         <div class="form-group" th:classappend="${#fields.hasErrors('type')}? 'has-error'">
